@@ -41,7 +41,7 @@ void Lexer::next_token() {
         default: {
             char buf[50];
             sprintf(buf, "Unexpected symbol: '%c' at position: %d", s[cur_pos], cur_pos);
-            throw std::runtime_error(buf);
+            throw lexer_exception(buf);
         }
     }
 }
@@ -57,3 +57,5 @@ int Lexer::get_cur_pos() {
 char Lexer::get_cur_char() {
     return s[cur_pos];
 }
+
+lexer_exception::lexer_exception(const std::string & s) : message(s) {}

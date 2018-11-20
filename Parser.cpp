@@ -172,5 +172,7 @@ void Parser::parser_error() {
             tok_descr = string("\'") + string(1, expected_tok) + "\'";
     }
     sprintf(buf, "Unexpected token: %s at position: %d", tok_descr.c_str(), pos);
-    throw std::runtime_error(buf);
+    throw parser_exception(buf);
 }
+
+parser_exception::parser_exception(const string & s) : message(s) {}

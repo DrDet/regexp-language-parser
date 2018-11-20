@@ -3,8 +3,6 @@
 #include "Lexer.h"
 #include "Tree.h"
 
-using node_t = std::unique_ptr<Node>;
-
 class Parser {
 public:
     Parser() = default;
@@ -23,3 +21,8 @@ private:
     void parser_error();
 };
 
+class parser_exception : public std::exception {
+    std::string message;
+public:
+    explicit parser_exception(const std::string &);
+};

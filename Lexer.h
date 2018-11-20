@@ -24,3 +24,9 @@ private:
 
     void skip_blanks();
 };
+
+class lexer_exception : public std::exception {
+    std::string message;
+public:
+    explicit lexer_exception(const std::string &);
+};
