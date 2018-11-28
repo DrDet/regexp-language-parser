@@ -176,3 +176,7 @@ void Parser::parser_error() {
 }
 
 parser_exception::parser_exception(const string & s) : message(s) {}
+
+const char *parser_exception::what() const noexcept {
+    return message.c_str();
+}

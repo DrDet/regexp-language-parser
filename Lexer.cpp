@@ -59,3 +59,7 @@ char Lexer::get_cur_char() {
 }
 
 lexer_exception::lexer_exception(const std::string & s) : message(s) {}
+
+const char *lexer_exception::what() const noexcept {
+    return message.c_str();
+}

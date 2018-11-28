@@ -25,4 +25,5 @@ class parser_exception : public std::exception {
     std::string message;
 public:
     explicit parser_exception(const std::string &);
+    virtual const char* what() const noexcept override;
 };
