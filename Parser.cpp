@@ -7,7 +7,7 @@ using std::string;
 node_t Parser::parse(const string &s) {
     lexer = Lexer(s);
     node_t root = S();
-    if (lexer.get_cur_tok() == END) {
+    if (lexer.get_cur_tok() == END$) {
         return root;
     }
     parser_error();
@@ -39,7 +39,7 @@ node_t Parser::S_() {
             break;
         }
         case RIGHT_BRACKET:
-        case END: {
+        case END$: {
             root->append_child(eps_symbol());
             break;
         }
@@ -77,7 +77,7 @@ node_t Parser::F_() {
         }
         case CHOICE:
         case RIGHT_BRACKET:
-        case END: {
+        case END$: {
             root->append_child(eps_symbol());
             break;
         }
@@ -115,7 +115,7 @@ node_t Parser::K_() {
         case RIGHT_BRACKET:
         case SYMBOL:
         case CHOICE:
-        case END: {
+        case END$: {
             root->append_child(eps_symbol());
             break;
         }
@@ -136,7 +136,7 @@ node_t Parser::T() {
             break;
         }
         case SYMBOL: {
-            root->append_child(term_symbol(string(1, lexer.get_cur_char())));
+            root->append_child(term_symbol(lexer.get_cur_tok_text()));
             break;
         }
         default: {
@@ -158,20 +158,20 @@ node_t Parser::eps_symbol() {
 
 void Parser::parser_error() {
     Token expected_tok = lexer.get_cur_tok();
-    int pos = lexer.get_cur_pos();
+    size_t pos = lexer.get_cur_pos();
     char buf[50];
     std::string tok_descr;
     switch (expected_tok) {
         case SYMBOL:
             tok_descr = "\'symbol\'";
             break;
-        case END:
+        case END$:
             tok_descr = "\'end of string\'";
             break;
         default:
             tok_descr = string("\'") + string(1, expected_tok) + "\'";
     }
-    sprintf(buf, "Unexpected token: %s at position: %d", tok_descr.c_str(), pos);
+    sprintf(buf, "Unexpected token: %s at position: %zu", tok_descr.c_str(), pos);
     throw parser_exception(buf);
 }
 

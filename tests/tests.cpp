@@ -7,7 +7,7 @@ using namespace std;
 
 void lexing(const string &s) {
     Lexer lexer(s);
-    while (lexer.get_cur_tok() != END) {
+    while (lexer.get_cur_tok() != END$) {
         lexer.next_token();
     }
 }
@@ -68,7 +68,6 @@ TEST(lexer, lexer_invalid_symbols_Test) {
     EXPECT_THROW(lexing("."), lexer_exception);
     EXPECT_THROW(lexing(","), lexer_exception);
     EXPECT_THROW(lexing("!"), lexer_exception);
-    EXPECT_THROW(lexing("_"), lexer_exception);
     EXPECT_THROW(lexing("\\"), lexer_exception);
     EXPECT_THROW(lexing("/"), lexer_exception);
     EXPECT_THROW(lexing("@"), lexer_exception);
@@ -119,7 +118,7 @@ TEST(parser, parser_failures_Test)
 
 TEST(parser, parser_random_Test)
 {
-    constexpr int TESTS_CNT = 200;
+    constexpr int TESTS_CNT = 50;
     for (int i = 0; i < TESTS_CNT; ++i) {
         LIMIT = rand() % 10 + 1;
         EXPECT_NO_THROW(parse(get_random_regexp()));
